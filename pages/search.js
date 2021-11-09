@@ -1,17 +1,19 @@
 import React from 'react'
+import { useState } from 'react'
 import tw from "tailwind-styled-components"
 import Link from 'next/link'
 
-const search = () => {
+
+const search = () => { 
+    const [pickup, setPickup] = useState("");
+    const [dropoff, setDropoff] = useState("");
     return (
        <Wrapper>
-           
            <ButtonContainer>
            <Link href="/"> 
                <BackButton src = "https://img.icons8.com/ios-filled/50/000000/left.png"/>
                </Link>
            </ButtonContainer>
-           
            <InputContainer>
            <FromToIcons>
                 <Circle src = "https://img.icons8.com/ios-filled/50/9CA3AF/filled-circle.png"/>
@@ -20,9 +22,14 @@ const search = () => {
            </FromToIcons>
            <InputBoxes>
 
-            <Input placeholder = 'Enter pickup location'/>
-            <Input placeholder = 'Where to?' />
-           
+            <Input placeholder = 'Enter pickup location'
+            value = {pickup}
+            onChange ={(e)=> setPickup(e.target.value)}
+            />
+            <Input placeholder = 'Where to?' 
+            value = {dropoff}
+            onChange ={(e)=> setDropoff(e.target.value)}
+            />
            </InputBoxes>
            <PlusIcon src = "https://img.icons8.com/ios/50/000000/plus-math.png"/>
 
@@ -31,9 +38,17 @@ const search = () => {
                <StarIcon src = "https://img.icons8.com/ios-filled/50/ffffff/star--v1.png"/>
                Saved Places
            </SavedPlaces>
-           <Button>
+           <Link href ={{
+               pathname: "/confirm",
+               query:{
+                   pickup: pickup,
+                   dropoff: dropoff
+               }
+           }}>
+           <ConfirmButtonContainer>
                Confirm Location
-           </Button>
+           </ConfirmButtonContainer>
+           </Link>
 
        </Wrapper>
     )
@@ -97,6 +112,7 @@ const StarIcon = tw.img`
 bg-gray-400 w-10 h-10 p-2 rounded-full mr-2
 `
 
-const Button = tw.div`
+const ConfirmButtonContainer = tw.div`
 flex bg-black buttoncolor flex items-center px-4 mb-2 mt-4 p-2 ml-2 mr-2 flex-col justify-center text-2xl
+transform hover:scale-105 transition text-xl
 `
